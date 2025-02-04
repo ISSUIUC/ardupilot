@@ -55,6 +55,7 @@ public:
 #if HAL_QUADPLANE_ENABLED
         LOITER_ALT_QLAND = 25,
 #endif
+        FIXED_WING_DRONE = 27, //Custom Flight Mode
     };
 
     // Constructor
@@ -872,3 +873,67 @@ protected:
 };
 
 #endif
+
+class ModeFixedWingDrone : public Mode
+{
+public:
+
+    Number mode_number() const override { return Number::FIXED_WING_DRONE; }
+    const char *name() const override { return "FIXED_WING_DRONE"; }
+    const char *name4() const override { return "FIXE"; }
+
+    // methods that affect movement of the vehicle in this mode
+    void update() override;
+
+    void navigate() override;
+
+    bool isHeadingLinedUp(const Location loiterCenterLoc, const Location targetLoc);
+    bool isHeadingLinedUp_cd(const int32_t bearing_cd, const int32_t heading_cd);
+    bool isHeadingLinedUp_cd(const int32_t bearing_cd);
+
+    bool allows_throttle_nudging() const override { return true; }
+
+    bool does_auto_navigation() const override { return true; }
+
+    bool does_auto_throttle() const override { return true; }
+
+    bool allows_terrain_disable() const override { return true; }
+
+    void update_target_altitude() override;
+    
+    bool mode_allows_autotuning() const override { return true; }
+
+protected:
+
+    bool _enter() override;
+};
+
+"""
+    // methods that affect movement of the vehicle in this mode
+    void update() override;
+
+    void navigate() override;
+
+   // virtual bool is_guided_mode() const override { return true; }
+
+    bool allows_throttle_nudging() const override { return true; }
+
+    bool does_auto_navigation() const override { return true; }
+
+    bool does_auto_throttle() const override { return true; }
+
+    // handle a guided target request from GCS
+    bool handle_guided_request(Location target_loc) override;
+
+    void set_radius_and_direction(const float radius, const bool direction_is_ccw);
+
+    void update_target_altitude() override;
+
+protected:
+
+    bool _enter() override;
+    bool _pre_arm_checks(size_t buflen, char *buffer) const override { return true; }
+
+private:
+    float active_radius_m;
+"""

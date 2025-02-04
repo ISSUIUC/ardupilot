@@ -948,7 +948,7 @@ void Plane::do_loiter_at_location()
     if (aparm.loiter_radius < 0) {
         loiter.direction = -1;
     } else {
-        loiter.direction = 1;
+        loiter.direction = 1;  // Direction for loiter. 1 for clockwise, -1 for counter-clockwise
     }
     next_WP_loc = current_loc;
 }

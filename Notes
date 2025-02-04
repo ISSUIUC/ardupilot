@@ -1,0 +1,13 @@
+3 Regions: 
+    Follow Region, Loiter Region --> Relative to rocket at center. 
+
+To-Do List: 
+Figure out documentation on the new modes
+Figure out C
+Understand how the modes are working
+Make integrated mode
+
+NOTE: Assume we receive telemetary data. 
+NOTE: X limit on height
+NOTE: Figure out, post apogee and pre apogee mode changes.
+        --> Should be able to get FSM status
